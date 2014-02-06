@@ -340,3 +340,18 @@ html
     script(src='/static/vendors/requirejs/require.js')
     script(src='/devel/test/js/#{target}-spec.js')
 ```
+
+## 使い方
+
+```bash
+git clone git@github.com:keitaoouchi/grunt-tdd-sample.git
+cd grunt-tdd-sample/devel
+npm install
+bower install
+bundle install
+grunt
+```
+
+そして
+http://localhost:3000/hoge/fuga
+を開く。
