@@ -1,0 +1,15 @@
+doctype 5
+html
+  head
+    title (^q^) < #{target} のてすと
+    link(rel='stylesheet', href='/static/vendors/mocha/mocha.css')
+    link(rel='stylesheet', href='/devel/test/css/style.css')
+
+  body
+    div(class='title')
+      h1 (^q^) < #{target} のてすと
+    div(id='mocha')
+    script(src='/static/js/config.js')
+    script(src='/devel/test/js/spec-config.js')
+    script(src='/static/vendors/requirejs/require.js')
+    script(src='/devel/test/js/#{target}-spec.js')

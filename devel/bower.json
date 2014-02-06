@@ -1,0 +1,21 @@
+{
+  "name": "static",
+  "version": "0.0.1",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "jquery": "~2.0.0",
+    "backbone-amd": "~1.0.0",
+    "requirejs-domready": "~2.0.1",
+    "requirejs": "~2.1.5",
+    "underscore-amd": "~1.4.4"
+  },
+  "devDependencies": {
+    "mocha": "~1.11.0",
+    "chai": "~1.6.1",
+    "sinon": "http://sinonjs.org/releases/sinon-1.7.1.js"
+  }
+}
