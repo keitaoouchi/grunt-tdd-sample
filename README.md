@@ -33,6 +33,34 @@ test/coffee -> test/js
 
 devel/node_modulsはgruntで使うモジュール、static/vendorsにはbowerでインストールする3rdパーティーのファイル。
 
+## サンプルソース
+
+https://github.com/keitaoouchi/grunt-tdd-sample
+
+## 試す
+
+事前にbunlder、bowerの導入が必要。
+
+```bash
+npm install -g bower grunt-cli
+```
+
+```bash
+gem install bundler
+```
+
+```bash
+git clone https://github.com/keitaoouchi/grunt-tdd-sample
+cd grunt-tdd-sample/devel
+npm install
+grunt setup
+grunt
+```
+
+そして
+http://localhost:3000/hoge/fuga
+へ。
+
 ## gruntの環境を作るためのpackage.json
 devel以下に配置してnpm install
 
@@ -110,7 +138,7 @@ devel直下に配置する
 ## Gruntfile.coffee
 やはりdevel直下に配置
 
-```coffee:Gruntfile.coffee
+```coffeescript:Gruntfile.coffee
 module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-watch'
@@ -225,7 +253,7 @@ gruntのwatchタスクで監視されてるので、devel/test以下にcoffee/ho
 
 ## require.jsの設定ファイルをcoffeeで書く
 
-```coffee:devel/coffee/config.coffee
+```coffeescript:devel/coffee/config.coffee
 require =
   baseUrl: '/static'
   paths:
@@ -241,11 +269,33 @@ require =
       exports: "Backbone"
 ```
 
+```coffeescript:devel/test/coffee/spec-config.coffee
+require_test =
+  paths:
+    mocha: 'vendors/mocha/mocha'
+    chai: 'vendors/chai/chai'
+    sinon: 'vendors/sinon/index'
+  shim:
+    mocha:
+      exports: 'mocha'
+    chai:
+      exports: 'chai'
+    sinon:
+      exports: 'sinon'
+
+require = window.require || {}
+
+for key, val of require_test.paths
+  require.paths[key] = val
+for key, val of require_test.shim
+  require.shim[key] = val
+```
+
 ## テスト対象となるモジュール例
 
 ものすごくどうでもいい感じのモジュールをRequirejsで作ります。
 
-```coffee:devel/hoge/fuga.coffee
+```coffeescript:devel/hoge/fuga.coffee
 define(
   'js/hoge/fuga',
   ['jquery', 'underscore', 'backbone'],
@@ -283,7 +333,7 @@ define(
 
 ## モジュールをテストするspec例
 
-```coffee:devel/test/coffee/hoge/fuga-spec.coffee
+```coffeescript:devel/test/coffee/hoge/fuga-spec.coffee
 require(['js/hoge/fuga', 'backbone', 'mocha', 'chai', 'sinon'], (App, Backbone, mocha, chai, sinon) ->
   'use strict'
 
@@ -341,17 +391,5 @@ html
     script(src='/devel/test/js/#{target}-spec.js')
 ```
 
-## 使い方
 
-```bash
-git clone git@github.com:keitaoouchi/grunt-tdd-sample.git
-cd grunt-tdd-sample/devel
-npm install
-bower install
-bundle install
-grunt
-```
 
-そして
-http://localhost:3000/hoge/fuga
-を開く。
